@@ -1,0 +1,17 @@
+[package]
+name = "zcopyall"
+version = "0.1.0"
+edition = "2021"
+description = "Copy the full retained scrollback of the focused Zellij pane to the system clipboard."
+license = "MIT"
+repository = "https://github.com/Gardlok/zcopyall"
+keywords = ["zellij", "clipboard", "scrollback", "terminal"]
+categories = ["command-line-utilities"]
+
+[dependencies]
+zellij-tile = "=0.44.3"
+
+[profile.release]
+lto = true
+strip = true
+codegen-units = 1

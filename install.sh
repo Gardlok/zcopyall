@@ -42,21 +42,16 @@ mkdir -p "$PLUGIN_DIR"
 install -m 0644 "$WASM" "$PLUGIN_PATH"
 
 printf '\nInstalled zcopyall to:\n  %s\n\n' "$PLUGIN_PATH"
-printf '%s\n' 'Add the following entries to your Zellij config.'
-printf '%s\n' 'If plugins/load_plugins/keybinds blocks already exist, merge these entries into them.'
-printf '\nplugins {\n'
-printf '    zcopyall location="file:%s"\n' "$PLUGIN_PATH"
-printf '}\n\n'
-printf 'load_plugins {\n'
-printf '    zcopyall\n'
-printf '}\n\n'
-printf 'keybinds {\n'
-printf '    shared_except "locked" {\n'
-printf '        bind "Alt a" {\n'
-printf '            MessagePlugin "zcopyall" {\n'
-printf '                name "copy_all"\n'
-printf '            }\n'
+
+printf '%s\n' 'First run (inside Zellij):'
+printf '  zellij action start-or-reload-plugin "file:%s"\n\n' "$PLUGIN_PATH"
+printf '%s\n' 'Grant the requested permissions, then add this binding to your existing keybinds block:'
+printf '\n'
+printf 'shared_except "locked" {\n'
+printf '    bind "Alt a" {\n'
+printf '        MessagePlugin "file:%s" {\n' "$PLUGIN_PATH"
+printf '            name "copy_all"\n'
 printf '        }\n'
 printf '    }\n'
 printf '}\n\n'
-printf '%s\n' 'Restart Zellij after adding/changing the plugin alias, grant the requested permissions once, then press Alt+A.'
+printf '%s\n' 'Do not add a plugins alias or load_plugins entry for zcopyall.'

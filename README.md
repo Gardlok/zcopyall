@@ -28,9 +28,15 @@ zellij-tile = 0.44.3
 
 It was initially developed and verified with Zellij 0.44.3 on Debian 12/XFCE.
 
+### Compatibility
+
+Zellij 0.39.x is **not supported**. The plugin depends on host/plugin APIs that are present in 0.44.3 but absent in 0.39.2, including full pane-scrollback access, current-client/pane discovery, and direct clipboard access.
+
+The installer checks the local Zellij version before building and refuses versions older than 0.44.3 with a clear error instead of installing a plugin that cannot run.
+
 ## Requirements
 
-- Zellij 0.44.3
+- Zellij 0.44.3 or newer (0.44.3 is the validated baseline)
 - Rust/Cargo installed through `rustup`
 - the Rust `wasm32-wasip1` target (the installer adds it automatically)
 

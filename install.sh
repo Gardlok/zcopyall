@@ -6,14 +6,26 @@ CONFIG_DIR="${ZELLIJ_CONFIG_DIR:-$HOME/.config/zellij}"
 PLUGIN_DIR="$CONFIG_DIR/plugins"
 PLUGIN_PATH="$PLUGIN_DIR/zcopyall.wasm"
 TARGET="wasm32-wasip1"
+MIN_ZELLIJ="0.44.3"
 
 die() {
     printf 'zcopyall: %s\n' "$*" >&2
     exit 1
 }
 
+command -v zellij >/dev/null 2>&1 || die "zellij is required"
 command -v cargo >/dev/null 2>&1 || die "cargo is required"
 command -v rustup >/dev/null 2>&1 || die "rustup is required"
+command -v sort >/dev/null 2>&1 || die "GNU sort is required for version checking"
+
+ZELLIJ_VERSION="$(zellij --version | awk '{print $2}')"
+[[ -n "$ZELLIJ_VERSION" ]] || die "could not determine Zellij version"
+
+if [[ "$(printf '%s\n' "$MIN_ZELLIJ" "$ZELLIJ_VERSION" | sort -V | head -n1)" != "$MIN_ZELLIJ" ]]; then
+    die "Zellij $ZELLIJ_VERSION is too old; zcopyall requires Zellij >= $MIN_ZELLIJ"
+fi
+
+printf '==> Zellij %s (minimum %s)\n' "$ZELLIJ_VERSION" "$MIN_ZELLIJ"
 
 printf '==> Ensuring Rust target %s\n' "$TARGET"
 rustup target add "$TARGET"

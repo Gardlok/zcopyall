@@ -15,8 +15,6 @@ Then paste normally.
 - Zellij **0.44.3 or newer**
 - Rust/Cargo installed through `rustup`
 
-Zellij 0.39.x is too old for the plugin API used by `zcopyall`.
-
 ## Install
 
 ```bash
